@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class NavBar extends StatelessWidget implements PreferredSizeWidget {
@@ -16,8 +15,8 @@ class NavBar extends StatelessWidget implements PreferredSizeWidget {
       toolbarHeight: 70,
       titleSpacing: 16,
       automaticallyImplyLeading: false,
-      title: SvgPicture.asset(
-        'assets/images/logo.svg',
+      title: Image.asset(
+        'assets/images/png/ads_logo.png',
         height: 100,
       ),
       actions: [
@@ -63,8 +62,9 @@ class NavBar extends StatelessWidget implements PreferredSizeWidget {
       style: ElevatedButton.styleFrom(
         backgroundColor: Colors.lightBlue,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(20),
         ),
+        elevation: 4,
       ),
       child: Text(
         'Contact',
