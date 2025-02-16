@@ -1,71 +1,95 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class ChooseUsScreen extends StatelessWidget {
+class ChooseUsScreen extends StatefulWidget {
   const ChooseUsScreen({super.key});
 
   @override
+  State<ChooseUsScreen> createState() => _ChooseUsScreenState();
+}
+
+class _ChooseUsScreenState extends State<ChooseUsScreen> {
+  int? selectedIndex; // Menyimpan index item yang sedang terbuka
+  final List<Map<String, String>> items = [ // Data item dalam bentuk List
+    {
+      "title": "Innovation-Driven Solutions",
+      "description":
+          "We leverage cutting-edge technologies such as AI, cloud computing, and automation to develop scalable, efficient, and future-proof digital solutions.",
+    },
+    {
+      "title": "Tailored & Scalable Development",
+      "description":
+          "Unlike generic solutions, we offer custom-built software that adapts to your specific business needs and grows with your company.",
+    },
+    {
+      "title": "Remote-First & Agile Approach",
+      "description":
+          "Our remote-first methodology allows us to collaborate efficiently, ensuring cost-effective, flexible, and rapid execution while maintaining top-tier quality.",
+    },
+    {
+      "title": "Full-Service Digital Transformation",
+      "description":
+          "From web & mobile app development to SaaS solutions and AI integration, we provide end-to-end digital services to help businesses scale and optimize operations.",
+    },
+    {
+      "title": "Cost-Effective & High-Quality Service",
+      "description":
+          "Hiring an in-house tech team is expensive. We provide affordable yet high-performance solutions, reducing operational costs without compromising quality.",
+    },
+    {
+      "title": "Long-Term Support & Continuous Improvement",
+      "description":
+          "Beyond development, we offer maintenance, optimization, and growth consulting, ensuring that your digital solutions evolve with market trends.",
+    },
+    {
+      "title": "Security & Reliability",
+      "description":
+          "We prioritize data security, compliance, and system stability, ensuring trustworthy and high-performing digital products.",
+    },
+  ];
+
+  @override
   Widget build(BuildContext context) {
-    final screenHeight = MediaQuery.of(context).size.height * 0.9;
     final screenWidth = MediaQuery.of(context).size.width;
-    final isMobile = screenWidth < 768; // Cek apakah tampilan mobile
+    final isMobile = screenWidth < 768;
 
     return SizedBox(
       width: double.infinity,
-      height: screenHeight, // Mengatur tinggi menjadi 90% dari layar
+      // height: double.infinity,
       child: Stack(
         children: [
-          // Background SVG
           Positioned.fill(
             child: SvgPicture.asset(
-              'assets/images/choose.svg', // Sesuaikan path sesuai lokasi file SVG
+              'assets/images/choose.svg',
               fit: BoxFit.cover,
             ),
           ),
-
-          // Konten
           Center(
-            child: SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 50, horizontal: 40),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    // Layout Gambar & Text (Responsive)
-                    isMobile
-                        ? Column(
-                            children: [
-                              Image.asset(
-                                "assets/images/png/choose_us.png",
-                                width: 300,
-                                height: 250,
-                                fit: BoxFit.contain,
-                              ),
-                              const SizedBox(height: 30),
-                              _buildTextContent(),
-                            ],
-                          )
-                        : Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Expanded(
-                                flex: 1,
-                                child: Image.asset(
-                                  "assets/images/png/choose_us.png",
-                                  width: 400,
-                                  height: 350,
-                                  fit: BoxFit.contain,
-                                ),
-                              ),
-                              const SizedBox(width: 50),
-                              Expanded(
-                                flex: 1,
-                                child: _buildTextContent(),
-                              ),
-                            ],
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                vertical: 50,
+                horizontal: isMobile ? 20 : 40,
+              ),
+              child: LayoutBuilder(
+                builder: (context, constraints) {
+                  return Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      if (!isMobile) ...[
+                        Expanded(
+                          child: Image.asset(
+                            "assets/images/png/choose_us.png",
+                            fit: BoxFit.contain,
                           ),
-                  ],
-                ),
+                        ),
+                        const SizedBox(width: 30),
+                      ],
+                      Expanded(
+                        child: _buildTextContent(isMobile),
+                      ),
+                    ],
+                  );
+                },
               ),
             ),
           ),
@@ -74,15 +98,15 @@ class ChooseUsScreen extends StatelessWidget {
     );
   }
 
-  // Widget untuk konten teks di sebelah kanan gambar
-  Widget _buildTextContent() {
+  Widget _buildTextContent(bool isMobile) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
       children: [
         Text(
           "WHY CHOOSE US?",
           style: TextStyle(
-            fontSize: 14,
+            fontSize: isMobile ? 12 : 14,
             fontWeight: FontWeight.w600,
             color: Colors.blue.shade600,
             fontFamily: "Urbanist",
@@ -90,84 +114,89 @@ class ChooseUsScreen extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 10),
-        const Text(
+        Text(
           "We bring solutions to make life easier.",
           style: TextStyle(
-            fontSize: 28,
+            fontSize: isMobile ? 22 : 28,
             fontWeight: FontWeight.bold,
             color: Colors.black87,
             fontFamily: "Urbanist",
           ),
         ),
-        const SizedBox(height: 15),
-
-        // Konten baru dengan desain yang lebih profesional
-        _buildExpandableItem(
-          title: "Innovation-Driven Solutions",
-          description:
-              "We leverage cutting-edge technologies such as AI, cloud computing, and automation to develop scalable, efficient, and future-proof digital solutions.",
-        ),
-        _buildExpandableItem(
-          title: "Tailored & Scalable Development",
-          description:
-              "Unlike generic solutions, we offer custom-built software that adapts to your specific business needs and grows with your company.",
-        ),
-        _buildExpandableItem(
-          title: "Remote-First & Agile Approach",
-          description:
-              "Our remote-first methodology allows us to collaborate efficiently, ensuring cost-effective, flexible, and rapid execution while maintaining top-tier quality.",
-        ),
-        _buildExpandableItem(
-          title: "Full-Service Digital Transformation",
-          description:
-              "From web & mobile app development to SaaS solutions and AI integration, we provide end-to-end digital services to help businesses scale and optimize operations.",
-        ),
-        _buildExpandableItem(
-          title: "Cost-Effective & High-Quality Service",
-          description:
-              "Hiring an in-house tech team is expensive. We provide affordable yet high-performance solutions, reducing operational costs without compromising quality.",
-        ),
-        _buildExpandableItem(
-          title: "Long-Term Support & Continuous Improvement",
-          description:
-              "Beyond development, we offer maintenance, optimization, and growth consulting, ensuring that your digital solutions evolve with market trends.",
-        ),
-        _buildExpandableItem(
-          title: "Security & Reliability",
-          description:
-              "We prioritize data security, compliance, and system stability, ensuring trustworthy and high-performing digital products.",
-        ),
+        const SizedBox(height: 20),
+        if (isMobile) ...[
+          Image.asset(
+            "assets/images/png/choose_us.png",
+            width: 250,
+            height: 200,
+            fit: BoxFit.contain,
+          ),
+          const SizedBox(height: 30),
+        ],
+        // List item dengan accordion behavior
+        ...List.generate(items.length, (index) {
+          return _buildExpandableItem(
+            title: items[index]['title']!,
+            description: items[index]['description']!,
+            index: index,
+            isMobile: isMobile,
+          );
+        }),
       ],
     );
   }
 
-  // Widget untuk bagian expandable list (accordion)
-  Widget _buildExpandableItem({required String title, required String description}) {
-    return ExpansionTile(
-      tilePadding: EdgeInsets.zero,
-      title: Text(
-        title,
-        style: const TextStyle(
-          fontSize: 16,
-          fontWeight: FontWeight.bold,
-          color: Colors.black87,
-          fontFamily: "Urbanist",
-        ),
+  Widget _buildExpandableItem({
+    required String title,
+    required String description,
+    required int index,
+    required bool isMobile,
+  }) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 8),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(8),
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            blurRadius: 4,
+            offset: const Offset(0, 2),
+          ),
+        ],
       ),
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(left: 16, right: 10, bottom: 10),
-          child: Text(
-            description,
-            style: const TextStyle(
-              fontSize: 14,
-              color: Colors.black54,
-              height: 1.5,
-              fontFamily: "Urbanist",
-            ),
+      child: ExpansionTile(
+        tilePadding: const EdgeInsets.symmetric(horizontal: 16),
+        initiallyExpanded: selectedIndex == index,
+        onExpansionChanged: (expanded) {
+          setState(() {
+            selectedIndex = expanded ? index : null;
+          });
+        },
+        title: Text(
+          title,
+          style: TextStyle(
+            fontSize: isMobile ? 14 : 16,
+            fontWeight: FontWeight.w600,
+            color: Colors.black87,
+            fontFamily: "Urbanist",
           ),
         ),
-      ],
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(16).copyWith(top: 0),
+            child: Text(
+              description,
+              style: TextStyle(
+                fontSize: isMobile ? 12 : 14,
+                color: Colors.black54,
+                height: 1.5,
+                fontFamily: "Urbanist",
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

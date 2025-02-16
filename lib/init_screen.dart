@@ -6,7 +6,7 @@ import 'package:arus_digital_fix/screen/company/company_screen.dart';
 import 'package:arus_digital_fix/screen/customer/customer_screen.dart';
 import 'package:arus_digital_fix/screen/footer/footer.dart';
 import 'package:arus_digital_fix/screen/hero/hero_screen.dart';
-import 'package:arus_digital_fix/screen/projects/projects_screen.dart';
+import 'package:arus_digital_fix/screen/projects/tech_stack.dart';
 import 'package:arus_digital_fix/screen/stategy/our_strategy_screen.dart';
 
 class InitScreen extends StatefulWidget {
@@ -45,9 +45,9 @@ class _InitScreenState extends State<InitScreen> {
             const OurStrategyScreen(),
             const ChooseUsScreen(),
             const CompanyScreen(),
-            const ProjectsScreen(),
+            const TechStackScreen(),
             const CustomerScreen(),
-            const Footer(),
+            const FaqScreen(),
           ],
         ),
       ),
