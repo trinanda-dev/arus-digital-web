@@ -1,11 +1,11 @@
 {
     "name": "Arus Digital Solution",
-    "short_name": "Arus Digital Solution",
+    "short_name": "Arus Digital",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "description": "Professional Software Development & Digital Solutions",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
